@@ -21,7 +21,7 @@ class DatabaseSettings(BaseSettings):
 
     @property
     def async_url(self):
-        return f"postgresql+asyncgp://{self.username}:{self.password}@{self.host}:{self.port}/{self.name}"
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
 class CorsSettings(BaseSettings):

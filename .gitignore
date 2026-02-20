@@ -211,3 +211,4 @@ __marimo__/
 Тестовое БЭКЕНД V2.docx
 .idea
 __pycache__
+.DS_Store

@@ -4,6 +4,7 @@ from .metric_record_tag import MetricRecordTag
 from .metric_record import MetricRecord
 from .enums import UserStatus
 from .user import User
+from .admin import Admin
 
 __all__ = [
     "Tag",
@@ -11,5 +12,6 @@ __all__ = [
     "MetricRecordTag",
     "MetricRecord",
     "UserStatus",
-    "User"
+    "User",
+    "Admin"
 ]
