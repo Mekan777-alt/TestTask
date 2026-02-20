@@ -14,9 +14,9 @@ class DatabaseSettings(BaseSettings):
 
     host: str = "localhost"
     port: int = 5432
-    username: str = "postgres"
+    user: str = "postgres"
     password: str = "12345"
-    name: str = "postgres"
+    name: str = "testTask"
 
 
     @property
