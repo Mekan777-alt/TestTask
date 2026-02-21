@@ -1,6 +1,9 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from decimal import Decimal
+from typing import Optional, List
 from datetime import datetime
+
+from api.dto.tag_dto import TagResponseDTO
 
 
 class MetricRequestDTO(BaseModel):
@@ -16,3 +19,21 @@ class MetricResponseDTO(BaseModel):
     created_at: datetime = Field(..., description="Время и дата создания метрики", examples=["2026-02-20T12:00:00"])
 
     model_config = {"from_attributes": True}
+
+
+class MetricRecordResponseDTO(BaseModel):
+    id: int = Field(..., description="Уникальный идентификатор записи", examples=[1])
+    metric_id: int = Field(..., description="ID метрики", examples=[1])
+    value: Decimal = Field(..., description="Значение показателя", examples=["1500.0000"])
+    timestamp: datetime = Field(..., description="Время измерения", examples=["2026-02-20T10:00:00"])
+    tags: List[TagResponseDTO] = Field(default=[], description="Список тегов",
+                                       examples=[[{"id": 1, "name": "пиковый"}]])
+    created_at: datetime = Field(..., description="Дата создания записи", examples=["2026-02-20T10:05:00"])
+
+    model_config = {"from_attributes": True}
+
+
+class MetricRecordRequestDTO(BaseModel):
+    value: Decimal = Field(..., description="Значение показателя", examples=["1500.0000"])
+    timestamp: datetime = Field(..., description="Время измерения", examples=["2026-02-20T10:00:00"])
+    tag_ids: List[int] = Field(default=[], description="Список ID тегов", examples=[[1, 2]])

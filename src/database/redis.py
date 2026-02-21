@@ -18,7 +18,7 @@ async def get_redis_client() -> Redis | None:
 
     return redis_client
 
-async def close_redis_client():
+async def close_redis_client() -> None:
     global redis_client
     if redis_client is not None:
         await redis_client.close()

@@ -2,16 +2,20 @@ from typing import List, TYPE_CHECKING
 
 from database.base import Base
 from decimal import Decimal
-from sqlalchemy import func, ForeignKey, Numeric, DateTime
+from sqlalchemy import func, ForeignKey, Numeric, DateTime, Table, Column
 from datetime import datetime
 from sqlalchemy.orm import mapped_column, Mapped, relationship
-
-
-from models.metric_record_tag import MetricRecordTag
 
 if TYPE_CHECKING:
     from models.tag import Tag
     from models.metric import Metric
+
+metric_record_tags = Table(
+    "metric_record_tags",
+    Base.metadata,
+    Column("record_id", ForeignKey("metric_records.id", ondelete="CASCADE"), primary_key=True),
+    Column("tag_id", ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True),
+)
 
 
 class MetricRecord(Base):
@@ -24,4 +28,4 @@ class MetricRecord(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     metric: Mapped["Metric"] = relationship(back_populates="records")
-    tags: Mapped[List["Tag"]] = relationship(secondary=MetricRecordTag.__table__)
+    tags: Mapped[List["Tag"]] = relationship(secondary=metric_record_tags)

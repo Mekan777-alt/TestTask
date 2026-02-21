@@ -9,7 +9,7 @@ from api.dto.tag_dto import TagResponseDTO
 
 router = APIRouter(
     prefix="/v1/tags",
-    tags=["Работа с тэгами"]
+    tags=["Работа с тегами"]
 )
 
 @router.get(

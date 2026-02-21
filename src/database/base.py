@@ -1,6 +1,6 @@
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import select
-from typing import Generic, TypeVar, Type, List
+from typing import Generic, TypeVar, Type, List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class Base(DeclarativeBase):
@@ -14,7 +14,7 @@ class BaseRepository(Generic[ModelType]):
         self.model = model
         self.session = session
 
-    async def get_by_id(self, id: int) -> ModelType:
+    async def get_by_id(self, id: int) -> Optional[ModelType]:
         return await self.session.get(self.model, id)
 
     async def get_all(self) -> List[ModelType]:

@@ -1,12 +1,11 @@
 from datetime import timedelta, datetime, timezone
-import bcrypt
 import uuid
-from jose import jwt, JWTError
-from passlib.context import CryptContext
-from typing import Any
-from core.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+import bcrypt
+from jose import jwt, JWTError
+from typing import Any
+
+from core.config import settings
 
 
 

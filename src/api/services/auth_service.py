@@ -50,7 +50,7 @@ class AuthService:
             expires_in=settings.jwt.access_expire_minutes * 60
         )
 
-    async def refresh_token_service(self, data: RefreshRequestDTO):
+    async def refresh_token_service(self, data: RefreshRequestDTO) -> AuthResponseDTO:
         payload = decode_token(data.refresh_token)
 
         if not payload:
@@ -99,7 +99,7 @@ class AuthService:
             expires_in=settings.jwt.access_expire_minutes * 60
         )
 
-    async def logout_service(self, data: LogoutRequestDTO):
+    async def logout_service(self, data: LogoutRequestDTO) -> MessageResponseDTO:
         refresh_payload = decode_token(data.refresh_token)
 
         if not refresh_payload:

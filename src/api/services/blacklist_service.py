@@ -21,5 +21,5 @@ class BlackListService:
             await self.client.setex(key, ttl, "1")
 
 
-def get_blacklist_service(client: Redis = Depends(get_redis_client)):
+def get_blacklist_service(client: Redis = Depends(get_redis_client)) -> BlackListService:
     return BlackListService(client)
