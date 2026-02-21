@@ -12,8 +12,7 @@ from api.controllers.tag_controller import router as tag_controller
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    redis_url = f"redis://:{settings.redis.password}@{settings.redis.host}:{settings.redis.port}/{settings.redis.db}"
-    redis = aioredis.from_url(redis_url, decode_responses=False)
+    redis = aioredis.from_url(settings.redis.url, decode_responses=False)
 
     FastAPICache.init(RedisBackend(redis), prefix="cache")
 

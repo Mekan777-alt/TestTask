@@ -23,6 +23,9 @@ class DatabaseSettings(BaseSettings):
     def async_url(self) -> str:
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
+    @property
+    def sync_url(self) -> str:
+        return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 class CorsSettings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -50,6 +53,10 @@ class RedisSettings(BaseSettings):
     port: int = 6379
     db: int = 0
     password: str = "12345"
+
+    @property
+    def url(self) -> str:
+        return f"redis://:{self.password}@{self.host}:{self.port}/{self.db}"
 
 
 class JWTSettings(BaseSettings):
