@@ -1,4 +1,5 @@
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import select
 from typing import Generic, TypeVar, Type, List
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -17,7 +18,7 @@ class BaseRepository(Generic[ModelType]):
         return await self.session.get(self.model, id)
 
     async def get_all(self) -> List[ModelType]:
-        result = await self.session.execute(self.model)
+        result = await self.session.execute(select(self.model))
         return list(result.scalars().all())
 
     async def create(self, model: ModelType) -> ModelType:

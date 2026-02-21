@@ -6,6 +6,7 @@ from redis import asyncio as aioredis
 from fastapi import FastAPI
 from database.redis import close_redis_client, get_redis_client
 from api.controllers.auth_controller import router as auth_router
+from api.controllers.metric_controller import router as metric_controller
 
 
 @asynccontextmanager
@@ -29,6 +30,7 @@ def create_app() -> FastAPI:
     )
 
     app.include_router(auth_router)
+    app.include_router(metric_controller)
 
     return app
 
