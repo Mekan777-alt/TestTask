@@ -43,7 +43,7 @@ async def get_current_user(
             detail="Токен аннулирован"
         )
 
-    user_id = payload.get("sub")
+    user_id = int(payload.get("sub"))
     result = await session.execute(
         select(User)
         .where(User.id == user_id)

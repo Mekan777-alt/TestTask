@@ -7,6 +7,7 @@ from fastapi import FastAPI
 from database.redis import close_redis_client, get_redis_client
 from api.controllers.auth_controller import router as auth_router
 from api.controllers.metric_controller import router as metric_controller
+from api.controllers.tag_controller import router as tag_controller
 
 
 @asynccontextmanager
@@ -26,11 +27,13 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="API",
         debug=True,
+        root_path="/api",
         lifespan=lifespan
     )
 
     app.include_router(auth_router)
     app.include_router(metric_controller)
+    app.include_router(tag_controller)
 
     return app
 

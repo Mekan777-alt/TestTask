@@ -1,7 +1,7 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 class DatabaseSettings(BaseSettings):
@@ -62,7 +62,7 @@ class JWTSettings(BaseSettings):
 
     secret_key: str = 'change-me-in-production'
     algorithm: str = 'HS256'
-    access_expire_minutes: int = 30
+    access_expire_minutes: int = 15
     refresh_expire_days: int = 7
 
 

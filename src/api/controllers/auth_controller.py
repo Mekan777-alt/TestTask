@@ -29,7 +29,6 @@ async def login(data: AuthRequestDTO, service: AuthService = Depends(get_auth_se
 )
 async def refresh_token(
         data: RefreshRequestDTO,
-        current_user: CurrentUser,
         service: AuthService = Depends(get_auth_service)
 ):
     return await service.refresh_token_service(data)

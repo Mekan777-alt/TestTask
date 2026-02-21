@@ -38,7 +38,7 @@ class AuthService:
                 detail="Данный пользователь не активен"
             )
 
-        user.last_login = datetime.now(timezone.utc)
+        user.last_login_at = datetime.now(timezone.utc)
         await self.auth_repository.update(user)
 
         access_token = create_access_token(user_id=str(user.id), email=user.email)
@@ -90,7 +90,7 @@ class AuthService:
         exp = datetime.fromtimestamp(payload.get("exp"), tz=timezone.utc)
         await self.blacklist_service.add_to_blacklist(jti, "refresh", exp)
 
-        access_token = create_access_token(str(user.id), user.role.name)
+        access_token = create_access_token(str(user.id), user.email)
         refresh_token = create_refresh_token(str(user.id))
 
         return AuthResponseDTO(
