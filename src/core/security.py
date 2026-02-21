@@ -1,12 +1,11 @@
-from datetime import timedelta, datetime, timezone
 import uuid
-
-import bcrypt
-from jose import jwt, JWTError
+from datetime import datetime, timedelta, timezone
 from typing import Any
 
-from core.config import settings
+import bcrypt
+from jose import JWTError, jwt
 
+from core.config import settings
 
 
 def hash_password(password: str) -> str:

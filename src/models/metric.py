@@ -1,13 +1,13 @@
-from typing import List, TYPE_CHECKING
 from datetime import datetime
+from typing import TYPE_CHECKING, List
+
+from sqlalchemy import DateTime, ForeignKey, String, Text, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
-from sqlalchemy.orm import mapped_column, Mapped, relationship
-from sqlalchemy import String, Text, ForeignKey, DateTime, func
 
 if TYPE_CHECKING:
-    from models import MetricRecord
-    from models import User
+    from models import MetricRecord, User
 
 
 class Metric(Base):

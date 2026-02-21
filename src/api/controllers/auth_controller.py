@@ -1,9 +1,16 @@
-from fastapi import Depends, APIRouter
+from fastapi import APIRouter, Depends
 from starlette import status
-from api.services.auth_service import get_auth_service, AuthService
+
+from api.dto.auth_dto import (
+    AuthRequestDTO,
+    AuthResponseDTO,
+    LogoutRequestDTO,
+    MessageResponseDTO,
+    RefreshRequestDTO,
+    UserResponseDTO,
+)
+from api.services.auth_service import AuthService, get_auth_service
 from core.dependencies import CurrentUser
-from api.dto.auth_dto import AuthRequestDTO, AuthResponseDTO, RefreshRequestDTO, MessageResponseDTO, LogoutRequestDTO, \
-    UserResponseDTO
 
 router = APIRouter(
     prefix="/v1/auth",

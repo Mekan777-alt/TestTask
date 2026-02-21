@@ -1,17 +1,16 @@
-import models
-from admin import views
-from database.session import async_session
 from sqlalchemy import select
 from starlette.applications import Starlette
-from starlette_admin.contrib.sqla import ModelView
-from database.session import engine
-from starlette_admin.contrib.sqla import Admin
-from starlette_admin import I18nConfig
-from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware import Middleware
+from starlette.middleware.sessions import SessionMiddleware
+from starlette_admin import I18nConfig
+from starlette_admin.contrib.sqla import Admin
+
+import models
+from admin import views
 from admin.auth.provider import AdminAuthProvider
 from core.config import settings
 from core.security import hash_password
+from database.session import async_session, engine
 
 
 async def initialize_admin():

@@ -1,13 +1,16 @@
 from contextlib import asynccontextmanager
-from core.config import settings
+
+from fastapi import FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from redis import asyncio as aioredis
-from fastapi import FastAPI
-from database.redis import close_redis_client, get_redis_client
+
 from api.controllers.auth_controller import router as auth_router
 from api.controllers.metric_controller import router as metric_controller
 from api.controllers.tag_controller import router as tag_controller
+from core.config import settings
+from database.redis import close_redis_client, get_redis_client
+from middlewares.cors import add_cors_middleware
 
 
 @asynccontextmanager
@@ -29,6 +32,8 @@ def create_app() -> FastAPI:
         root_path="/api",
         lifespan=lifespan
     )
+
+    add_cors_middleware(app)
 
     app.include_router(auth_router)
     app.include_router(metric_controller)

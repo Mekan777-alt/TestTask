@@ -1,11 +1,11 @@
 from typing import Optional
 
 from fastapi import Depends
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.session import get_session
 from database.base import BaseRepository
+from database.session import get_session
 from models import User
 
 

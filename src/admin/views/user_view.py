@@ -3,8 +3,8 @@ from typing import Any
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.requests import Request
+from starlette_admin import DateTimeField, EnumField, IntegerField, StringField
 from starlette_admin.contrib.sqla import ModelView
-from starlette_admin import StringField, IntegerField, EnumField, DateTimeField
 
 from core.security import hash_password
 from models.user import User
@@ -41,5 +41,6 @@ class UserView(ModelView):
             session: AsyncSession = request.state.session
             result = await session.execute(select(User).where(User.id == int(pk)))
             user = result.scalar()
-            data["password_hash"] = user.password_hash
+            if user:
+                data["password_hash"] = user.password_hash
         return await super().edit(request, pk, data)

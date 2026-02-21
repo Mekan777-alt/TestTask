@@ -1,7 +1,9 @@
-from sqlalchemy.orm import DeclarativeBase
+from typing import Generic, List, Optional, Type, TypeVar
+
 from sqlalchemy import select
-from typing import Generic, TypeVar, Type, List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import DeclarativeBase
+
 
 class Base(DeclarativeBase):
     pass

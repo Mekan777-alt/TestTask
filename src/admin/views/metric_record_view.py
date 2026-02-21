@@ -1,4 +1,4 @@
-from starlette_admin import IntegerField, DecimalField, DateTimeField, HasMany
+from starlette_admin import DateTimeField, DecimalField, HasMany, IntegerField
 from starlette_admin.contrib.sqla import ModelView
 
 

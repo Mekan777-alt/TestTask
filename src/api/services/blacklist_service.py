@@ -1,7 +1,9 @@
 from datetime import datetime, timezone
-from database.redis import get_redis_client
+
 from fastapi import Depends
 from redis.asyncio import Redis
+
+from database.redis import get_redis_client
 
 
 class BlackListService:

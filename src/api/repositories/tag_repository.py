@@ -3,9 +3,10 @@ from typing import List
 from fastapi import Depends
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from models import Tag
+
 from database.base import BaseRepository
 from database.session import get_session
+from models import Tag
 
 
 class TagRepository(BaseRepository[Tag]):

@@ -1,14 +1,15 @@
-from typing import List, TYPE_CHECKING
+from datetime import datetime
+from decimal import Decimal
+from typing import TYPE_CHECKING, List
+
+from sqlalchemy import Column, DateTime, ForeignKey, Numeric, Table, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
-from decimal import Decimal
-from sqlalchemy import func, ForeignKey, Numeric, DateTime, Table, Column
-from datetime import datetime
-from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 if TYPE_CHECKING:
-    from models.tag import Tag
     from models.metric import Metric
+    from models.tag import Tag
 
 metric_record_tags = Table(
     "metric_record_tags",

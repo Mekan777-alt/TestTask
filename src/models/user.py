@@ -1,8 +1,9 @@
 from datetime import datetime
 from typing import TYPE_CHECKING, List
 
-from sqlalchemy import String, DateTime, func, Enum as SAEnum, Text
-from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy import DateTime, String, Text, func
+from sqlalchemy import Enum as SAEnum
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from database.base import Base
 from models.enums import UserStatus

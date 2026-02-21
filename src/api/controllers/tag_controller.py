@@ -2,10 +2,10 @@ from typing import List
 
 from fastapi import APIRouter, Depends
 from starlette import status
-from api.services.tag_service import get_tag_service, TagService
-from core.dependencies import CurrentUser
-from api.dto.tag_dto import TagResponseDTO
 
+from api.dto.tag_dto import TagResponseDTO
+from api.services.tag_service import TagService, get_tag_service
+from core.dependencies import CurrentUser
 
 router = APIRouter(
     prefix="/v1/tags",

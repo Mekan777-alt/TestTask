@@ -1,12 +1,14 @@
-from fastapi import Depends, HTTPException
-from sqlalchemy import select
-from starlette import status
 from typing import Annotated
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.session import get_session
+from starlette import status
+
 from api.services.blacklist_service import BlackListService, get_blacklist_service
 from core.security import decode_token
+from database.session import get_session
 from models import User, UserStatus
 
 bearer_scheme = HTTPBearer()
@@ -35,7 +37,7 @@ async def get_current_user(
             detail="Недействительный тип токена"
         )
 
-    jti = payload.get("jti")
+    jti = str(payload.get("jti"))
 
     if await blacklist.is_blacklisted(jti, "access"):
         raise HTTPException(
@@ -43,7 +45,7 @@ async def get_current_user(
             detail="Токен аннулирован"
         )
 
-    user_id = int(payload.get("sub"))
+    user_id = int(payload["sub"])
     result = await session.execute(
         select(User)
         .where(User.id == user_id)

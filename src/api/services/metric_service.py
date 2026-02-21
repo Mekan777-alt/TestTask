@@ -1,13 +1,13 @@
 from typing import List
 
-from fastapi import HTTPException, Depends
+from fastapi import Depends, HTTPException
 from fastapi_cache import FastAPICache
 from starlette import status
 
-from models import User, Metric, MetricRecord
-from api.dto.metric_dto import MetricRequestDTO, MetricRecordRequestDTO
+from api.dto.metric_dto import MetricRecordRequestDTO, MetricRequestDTO
 from api.repositories.metric_repository import MetricRepository, get_metric_repository
 from api.repositories.tag_repository import TagRepository, get_tag_repository
+from models import Metric, MetricRecord, User
 
 
 class MetricService:

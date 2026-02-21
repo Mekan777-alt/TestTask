@@ -3,11 +3,11 @@ from datetime import datetime, timezone
 from fastapi import Depends, HTTPException
 from starlette import status
 
-from api.dto.auth_dto import AuthRequestDTO, AuthResponseDTO, RefreshRequestDTO, LogoutRequestDTO, MessageResponseDTO
+from api.dto.auth_dto import AuthRequestDTO, AuthResponseDTO, LogoutRequestDTO, MessageResponseDTO, RefreshRequestDTO
 from api.repositories.auth_repository import AuthRepository, get_auth_repository
 from api.services.blacklist_service import BlackListService, get_blacklist_service
-from core.security import verify_password, create_access_token, create_refresh_token, decode_token
 from core.config import settings
+from core.security import create_access_token, create_refresh_token, decode_token, verify_password
 from models import UserStatus
 
 
@@ -72,8 +72,8 @@ class AuthService:
                 detail="Токен отозван"
             )
 
-        user_id = payload.get("sub")
-        user = await self.auth_repository.get_by_id(int(user_id))
+        user_id = int(payload["sub"])
+        user = await self.auth_repository.get_by_id(user_id)
 
         if not user:
             raise HTTPException(
@@ -87,7 +87,7 @@ class AuthService:
                 detail="Аккаунт заблокирован"
             )
 
-        exp = datetime.fromtimestamp(payload.get("exp"), tz=timezone.utc)
+        exp = datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
         await self.blacklist_service.add_to_blacklist(jti, "refresh", exp)
 
         access_token = create_access_token(str(user.id), user.email)
@@ -115,9 +115,9 @@ class AuthService:
             )
 
         await self.blacklist_service.add_to_blacklist(
-            token_type=refresh_payload.get("type"),
-            jti=refresh_payload.get("jti"),
-            expires_at=datetime.fromtimestamp(refresh_payload.get("exp"), tz=timezone.utc)
+            token_type=str(refresh_payload["type"]),
+            jti=str(refresh_payload["jti"]),
+            expires_at=datetime.fromtimestamp(refresh_payload["exp"], tz=timezone.utc)
         )
 
         return MessageResponseDTO(message="Успешный выход из системы")

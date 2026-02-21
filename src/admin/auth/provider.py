@@ -1,10 +1,10 @@
 from sqlalchemy.future import select
 from starlette.requests import Request
 from starlette.responses import Response
-from starlette_admin.auth import AuthProvider, AdminConfig, AdminUser
+from starlette_admin.auth import AdminConfig, AdminUser, AuthProvider
 from starlette_admin.exceptions import LoginFailed
-from core.security import verify_password
 
+from core.security import verify_password
 from database.session import async_session
 from models import Admin
 

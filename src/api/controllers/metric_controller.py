@@ -1,17 +1,13 @@
 from typing import List
 
-from starlette.requests import Request
-from starlette.responses import Response
-
-from api.services.metric_service import MetricService, get_metric_service
-from starlette import status
-from fastapi import Depends, APIRouter, Path
-from api.dto.metric_dto import MetricRequestDTO, MetricResponseDTO, MetricRecordResponseDTO, MetricRecordRequestDTO
-from core.dependencies import CurrentUser
-from core.cache_utils import records_cache_key
-
+from fastapi import APIRouter, Depends, Path
 from fastapi_cache.decorator import cache
+from starlette import status
 
+from api.dto.metric_dto import MetricRecordRequestDTO, MetricRecordResponseDTO, MetricRequestDTO, MetricResponseDTO
+from api.services.metric_service import MetricService, get_metric_service
+from core.cache_utils import records_cache_key
+from core.dependencies import CurrentUser
 
 router = APIRouter(
     prefix="/v1/metrics",

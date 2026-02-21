@@ -1,4 +1,4 @@
-from starlette_admin import StringField, IntegerField
+from starlette_admin import IntegerField, StringField
 from starlette_admin.contrib.sqla import ModelView
 
 

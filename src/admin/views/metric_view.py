@@ -1,4 +1,4 @@
-from starlette_admin import IntegerField, StringField, TextAreaField, DateTimeField, HasMany
+from starlette_admin import DateTimeField, HasMany, IntegerField, StringField, TextAreaField
 from starlette_admin.contrib.sqla import ModelView
 
 
@@ -15,4 +15,3 @@ class MetricView(ModelView):
     exclude_fields_from_create = ["id", "created_at"]
     exclude_fields_from_edit = ["id", "created_at"]
     searchable_fields = ["name"]
-    

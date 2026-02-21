@@ -1,7 +1,7 @@
-from sqlalchemy import Text, String
+from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column
-from database.base import Base
 
+from database.base import Base
 
 
 class Admin(Base):
