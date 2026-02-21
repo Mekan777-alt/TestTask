@@ -1,10 +1,16 @@
 from typing import List
 
+from starlette.requests import Request
+from starlette.responses import Response
+
 from api.services.metric_service import MetricService, get_metric_service
 from starlette import status
 from fastapi import Depends, APIRouter, Path
 from api.dto.metric_dto import MetricRequestDTO, MetricResponseDTO, MetricRecordResponseDTO, MetricRecordRequestDTO
 from core.dependencies import CurrentUser
+from core.cache_utils import records_cache_key
+
+from fastapi_cache.decorator import cache
 
 
 router = APIRouter(
@@ -43,6 +49,7 @@ async def get_metrics(current_user: CurrentUser, service: MetricService = Depend
     status_code=status.HTTP_200_OK,
     response_model=List[MetricRecordResponseDTO]
 )
+@cache(expire=60, key_builder=records_cache_key)
 async def get_metric_records(
         metric_id: int,
         current_user: CurrentUser,

@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import HTTPException, Depends
+from fastapi_cache import FastAPICache
 from starlette import status
 
 from models import User, Metric, MetricRecord
@@ -13,6 +14,9 @@ class MetricService:
     def __init__(self, metric_repository: MetricRepository, tag_repository: TagRepository):
         self.metric_repository = metric_repository
         self.tag_repository = tag_repository
+
+    def _cache_key(self, user_id: int, metric_id: int) -> str:
+        return f"cache:records:{user_id}:{metric_id}"
 
     async def create_metric_service(self, data: MetricRequestDTO, current_user: User) -> Metric:
         metric = Metric(
@@ -80,7 +84,10 @@ class MetricService:
             tags=tags,
         )
 
-        return await self.metric_repository.create_record(record)
+        record = await self.metric_repository.create_record(record)
+        await FastAPICache.get_backend().clear(key=self._cache_key(current_user.id, metric_id))
+
+        return record
 
 
 def get_metric_service(
