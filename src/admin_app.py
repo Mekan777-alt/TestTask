@@ -1,5 +1,5 @@
+from fastapi import FastAPI
 from sqlalchemy import select
-from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from starlette_admin import I18nConfig
@@ -23,23 +23,23 @@ async def initialize_admin():
             session.add(default_admin)
             await session.commit()
 
-i18n_config = I18nConfig(default_locale="ru")
 
-app = Starlette(on_startup=[initialize_admin])
+def setup_admin(app: FastAPI):
+    i18n_config = I18nConfig(default_locale="ru")
 
-admin = Admin(engine,
-              title="Админка",
-              base_url="/admin",
-              auth_provider=AdminAuthProvider(),
-              middlewares=[Middleware(SessionMiddleware, secret_key=settings.jwt.secret_key)],
-              i18n_config=i18n_config
-              )
+    admin = Admin(engine,
+                  title="Админка",
+                  base_url="/admin",
+                  auth_provider=AdminAuthProvider(),
+                  middlewares=[Middleware(SessionMiddleware, secret_key=settings.jwt.secret_key)],
+                  i18n_config=i18n_config
+                  )
 
 
-admin.add_view(views.AdminView(models.Admin, icon="fa fa-users", label="Администраторы"))
-admin.add_view(views.UserView(models.User, icon="fa fa-users", label="Пользователи"))
-admin.add_view(views.TagView(models.Tag, icon="fa fa-tag", label="Теги"))
-admin.add_view(views.MetricView(models.Metric, icon="fa fa-chart-line", label="Метрики"))
-admin.add_view(views.MetricRecordView(models.MetricRecord, icon="fa fa-list", label="Записи метрик"))
+    admin.add_view(views.AdminView(models.Admin, icon="fa fa-users", label="Администраторы"))
+    admin.add_view(views.UserView(models.User, icon="fa fa-users", label="Пользователи"))
+    admin.add_view(views.TagView(models.Tag, icon="fa fa-tag", label="Теги"))
+    admin.add_view(views.MetricView(models.Metric, icon="fa fa-chart-line", label="Метрики"))
+    admin.add_view(views.MetricRecordView(models.MetricRecord, icon="fa fa-list", label="Записи метрик"))
 
-admin.mount_to(app)
+    admin.mount_to(app)

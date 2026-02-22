@@ -8,16 +8,16 @@ from models import Metric, Tag
 async def test_create_metric_record_success(client: AsyncClient, test_metric: Metric):
     """Успешное создание записи метрики."""
     response = await client.post(
-        f"/v1/metrics/{test_metric.id}/records",
+        f"/api/v1/metrics/{test_metric.id}/records",
         json={
-            "value": "150.5000",
+            "value": 150.5,
             "timestamp": "2026-02-20T10:00:00",
         },
     )
     assert response.status_code == 201
     data = response.json()
     assert data["metric_id"] == test_metric.id
-    assert data["value"] == "150.5000"
+    assert data["value"] == 150.5
     assert data["tags"] == []
     assert "id" in data
     assert "created_at" in data
@@ -30,9 +30,9 @@ async def test_create_metric_record_with_tags(
     """Создание записи метрики с тегами."""
     tag_ids = [tag.id for tag in test_tags]
     response = await client.post(
-        f"/v1/metrics/{test_metric.id}/records",
+        f"/api/v1/metrics/{test_metric.id}/records",
         json={
-            "value": "200.0000",
+            "value": 200.0,
             "timestamp": "2026-02-20T12:00:00",
             "tag_ids": tag_ids,
         },
@@ -48,9 +48,9 @@ async def test_create_metric_record_with_tags(
 async def test_create_metric_record_metric_not_found(client: AsyncClient):
     """Метрика не найдена — 404."""
     response = await client.post(
-        "/v1/metrics/99999/records",
+        "/api/v1/metrics/99999/records",
         json={
-            "value": "100.0000",
+            "value": 100.0,
             "timestamp": "2026-02-20T10:00:00",
         },
     )
@@ -63,9 +63,9 @@ async def test_create_metric_record_tags_not_found(
 ):
     """Несуществующие теги — 404."""
     response = await client.post(
-        f"/v1/metrics/{test_metric.id}/records",
+        f"/api/v1/metrics/{test_metric.id}/records",
         json={
-            "value": "100.0000",
+            "value": 100.0,
             "timestamp": "2026-02-20T10:00:00",
             "tag_ids": [99998, 99999],
         },
@@ -85,9 +85,9 @@ async def test_create_metric_record_unauthorized():
         base_url="http://test",
     ) as ac:
         response = await ac.post(
-            "/v1/metrics/1/records",
+            "/api/v1/metrics/1/records",
             json={
-                "value": "100.0000",
+                "value": 100.0,
                 "timestamp": "2026-02-20T10:00:00",
             },
         )
@@ -100,7 +100,7 @@ async def test_create_metric_record_invalid_data(
 ):
     """Невалидные данные — 422."""
     response = await client.post(
-        f"/v1/metrics/{test_metric.id}/records",
+        f"/api/v1/metrics/{test_metric.id}/records",
         json={
             "value": "not_a_number",
             "timestamp": "invalid_date",

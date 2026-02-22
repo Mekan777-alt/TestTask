@@ -25,7 +25,7 @@ class MetricResponseDTO(BaseModel):
 class MetricRecordResponseDTO(BaseModel):
     id: int = Field(..., description="Уникальный идентификатор записи", examples=[1])
     metric_id: int = Field(..., description="ID метрики", examples=[1])
-    value: Decimal = Field(..., description="Значение показателя", examples=["1500.0000"])
+    value: float = Field(..., description="Значение показателя", examples=[1500.0])
     timestamp: datetime = Field(..., description="Время измерения", examples=["2026-02-20T10:00:00"])
     tags: List[TagResponseDTO] = Field(default=[], description="Список тегов",
                                        examples=[[{"id": 1, "name": "пиковый"}]])

@@ -8,7 +8,7 @@ from api.services.tag_service import TagService, get_tag_service
 from core.dependencies import CurrentUser
 
 router = APIRouter(
-    prefix="/v1/tags",
+    prefix="/api/v1/tags",
     tags=["Работа с тегами"]
 )
 

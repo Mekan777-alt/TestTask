@@ -10,7 +10,7 @@ from core.cache_utils import records_cache_key
 from core.dependencies import CurrentUser
 
 router = APIRouter(
-    prefix="/v1/metrics",
+    prefix="/api/v1/metrics",
     tags=["Работа с метриками"],
 )
 

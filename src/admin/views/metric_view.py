@@ -1,4 +1,4 @@
-from starlette_admin import DateTimeField, HasMany, IntegerField, StringField, TextAreaField
+from starlette_admin import DateTimeField, IntegerField, StringField, TextAreaField
 from starlette_admin.contrib.sqla import ModelView
 
 
@@ -9,7 +9,6 @@ class MetricView(ModelView):
         TextAreaField("description", label="Описание"),
         IntegerField("owner_id", label="Владелец"),
         DateTimeField("created_at", label="Дата создания"),
-        HasMany("records", label="Записи"),
     ]
 
     exclude_fields_from_create = ["id", "created_at"]

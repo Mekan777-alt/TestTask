@@ -5,6 +5,7 @@ from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from redis import asyncio as aioredis
 
+from admin_app import initialize_admin, setup_admin
 from api.controllers.auth_controller import router as auth_router
 from api.controllers.metric_controller import router as metric_controller
 from api.controllers.tag_controller import router as tag_controller
@@ -20,6 +21,7 @@ async def lifespan(app: FastAPI):
     FastAPICache.init(RedisBackend(redis), prefix="cache")
 
     await get_redis_client()
+    await initialize_admin()
     yield
     await redis.close()
     await close_redis_client()
@@ -29,11 +31,14 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="API",
         debug=True,
-        root_path="/api",
+        docs_url="/docs",
+        redoc_url="/redoc",
+        openapi_url="/openapi.json",
         lifespan=lifespan
     )
 
     add_cors_middleware(app)
+    setup_admin(app)
 
     app.include_router(auth_router)
     app.include_router(metric_controller)

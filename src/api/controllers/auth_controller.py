@@ -13,7 +13,7 @@ from api.services.auth_service import AuthService, get_auth_service
 from core.dependencies import CurrentUser
 
 router = APIRouter(
-    prefix="/v1/auth",
+    prefix="/api/v1/auth",
     tags=["Авторизация пользователей"]
 )
 
